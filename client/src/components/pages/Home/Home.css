@@ -1,0 +1,119 @@
+.homeBg{
+    background-image: url('../../assets/images/facets.png');
+}
+
+.mainHeading {
+    justify-content: center;
+    display: flex;
+    vertical-align: middle;
+    flex-direction: column;
+}
+
+.smallIcons{
+    width: 50px;
+}
+
+.flexIcons{
+    display: flex;
+    list-style: none;
+    padding-left: 0;
+}
+
+.iconMargin{
+    margin-left: 15px;
+}
+
+.iconColor{
+    color: #1CC29F;
+}
+
+.h-4 {
+    height: 1rem;
+}
+
+.ss1{
+    background-image: url('../../assets/images/facets.png');
+    background-color: #373B3F;
+    color: #fff;
+    text-align: center;
+}
+
+.ss2{
+    background-image: url('../../assets/images/facets.png');
+    background-color: #1CC29F;
+    color: #fff;
+    text-align: center;
+}
+
+.ss3{
+    background-image: url('../../assets/images/facets.png');
+    background-color: #f67240;
+    color: #fff;
+    text-align: center;
+}
+
+.ss4{
+    background-image: url('../../assets/images/facets.png');
+    background-color: #8656cd;
+    color: #fff;
+    text-align: center;
+}
+
+.textVCenter{
+    justify-content: center;
+    display: flex;
+    vertical-align: middle;
+    flex-direction: column;
+}
+
+.signupbtn{
+    width: 130px;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 5px;
+}
+
+.signupbtn:hover{
+    color: #fff;
+}
+
+.heading1{
+    font-weight: 700;
+    font-size: 40px;
+}
+
+.largeScreenPlain{
+    display: block;
+}
+.smallScreenPlain{
+    display: none;
+}
+
+@media screen and (max-width: 600px) {
+    .heading1 {
+        font-size: 35px;
+        text-align: center;
+        margin-top: 30px;
+    }
+    .flexIcons{
+        justify-content: center;
+    }
+    .largeScreenPlain{
+        display: none;
+    }
+    .smallScreenPlain{
+        display: block;
+    }
+    .heading2{
+        text-align: center;
+    }
+    .text-charcoal{
+        text-align: center;
+        margin-bottom: 25px;
+    }
+}
+
+.heading2{
+    font-size: 500;
+    font-weight: 17px;
+}

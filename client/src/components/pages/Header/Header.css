@@ -1,0 +1,28 @@
+.navbar-collapse{
+    justify-content: end;
+}
+
+.Text{
+    color: #1CC29F !important;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.activeText{
+    background-color: #1CC29F;
+    box-shadow: 0 2px 0 0 rgb(55 59 63 / 50%);
+    border-radius: 5px;
+    color: #fff !important;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+
+@media screen and (min-width:600px) {
+    .navbar-brand{
+        margin-left: 80px;
+    }
+    .navbar-collapse{
+        margin-right: 80px;
+    }
+}
