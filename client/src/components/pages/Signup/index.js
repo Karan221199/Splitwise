@@ -1,6 +1,43 @@
 import './signup.css';
+import React,{useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 const Signup = () => {
+    const [name,setName] = useState('');
+    const [email,setEmail] = useState('');
+    const [password,setPassword] = useState('');
+    const navigate = useNavigate();
+    const submitHandler = () => {
+        if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
+            alert('Invalid email');
+            return 
+        }
+
+        fetch('http://localhost:3001/signup',{
+            method:"post",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                name,
+                email,
+                password
+            })
+        }).then(res => res.json())
+        .then(data => {
+            if(data.error)
+            {
+                alert(data.error);
+            }
+            else{
+                alert("Signed up successfully");
+                navigate('/login');
+            }
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
     return (
         <section>
             <div className="container-fluid signupBg">
@@ -12,19 +49,19 @@ const Signup = () => {
                                 <div className='row'>
                                     <div className='col-12'>
                                         <label htmlFor='name'>Hi there! My name is</label>
-                                        <input type="text" className='form-control' id='name'/>
+                                        <input type="text" className='form-control' id='name' value={name} onChange={(e)=>setName(e.target.value)}/>
                                     </div>
                                     <div className='col-12'>
                                         <label htmlFor='email'>Here’s my email address:</label>
-                                        <input type="email" className='form-control' id='email'/>
+                                        <input type="email" className='form-control' id='email' value={email} onChange={(e)=>setEmail(e.target.value)}/>
                                     </div>
                                     <div className='col-12'>
                                         <label htmlFor='password'>And here’s my password:</label>
-                                        <input type="password" className='form-control' id='password'/>
+                                        <input type="password" className='form-control' id='password' value={[password]} onChange={(e)=>setPassword(e.target.value)}/>
                                     </div>
 
                                     <div className='col-12 mt-3' style={{textAlign:"center"}}>
-                                        <button type='button' className='btn'>Sign me up!</button>
+                                        <button type='button' className='btn' onClick={submitHandler}>Sign me up!</button>
                                     </div>
                                 </div>
                             </div>

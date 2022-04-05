@@ -1,5 +1,44 @@
 import './login.css';
+import React, { useState } from 'react';
+import { useDispatch } from "react-redux";
+import {loginUser} from  "../../redux/actions/action";
+import {useNavigate} from 'react-router-dom';
+
 const Login = () => {
+    const[email,setEmail] = useState('');
+    const[password, setPassword] = useState('');
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const loginHandler = () => {
+        if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
+            alert('Invalid email');
+            return 
+        }
+
+        fetch('http://localhost:3001/login',{
+            method:"post",
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+                email,
+                password
+            })
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            if(data.error)
+            {
+                alert(data.error)
+            }
+            else{
+                localStorage.setItem('jwt',data.token);
+                localStorage.setItem('user',JSON.stringify(data.user));
+                dispatch(loginUser(data.user));
+                navigate('/home');
+            }
+        })
+    }
     return (
         <section>
             <div className="container-fluid loginBg">
@@ -11,15 +50,15 @@ const Login = () => {
                                 <div className='row'>
                                     <div className='col-12'>
                                         <label htmlFor='email'>Email address</label>
-                                        <input type="email" className='form-control' id='email'/>
+                                        <input type="email" value={email} className='form-control' id='email' onChange={(e)=>setEmail(e.target.value)}/>
                                     </div>
                                     <div className='col-12'>
                                         <label htmlFor='password'>Password</label>
-                                        <input type="password" className='form-control' id='password'/>
+                                        <input type="password" value={password} className='form-control' id='password' onChange={(e)=>setPassword(e.target.value)}/>
                                     </div>
 
                                     <div className='col-12 mt-3' style={{textAlign:"center"}}>
-                                        <button type='button' className='btn'>Log in</button>
+                                        <button type='button' className='btn' onClick={loginHandler}>Log in</button>
                                     </div>
                                     <div className='col-12 mt-3' style={{textAlign:"center"}}>
                                         <a className={"nav-link Text"} href="#">Forgot your password?</a>
