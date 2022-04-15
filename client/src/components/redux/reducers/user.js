@@ -1,4 +1,5 @@
 import { USER } from "../action-types/type";
+import { CLEAR } from "../action-types/type";
 
 const initialUser = () => {
     
@@ -7,6 +8,7 @@ const initialUser = () => {
     if(getUser){
         user = JSON.parse(getUser);
     }
+    
     return user;
 }
 
@@ -18,7 +20,12 @@ export const userReducer = (state = initialState, action) => {
     
     switch(action.type) {
         case USER: {
-            return state;
+            return {
+                user:action.data
+            };
+        }
+        case CLEAR: {
+            return null
         }
         default:
             return state;

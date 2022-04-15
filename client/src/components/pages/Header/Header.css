@@ -26,3 +26,11 @@
         margin-right: 80px;
     }
 }
+
+.show{
+    display: block;
+}
+
+.hide{
+    display: none;
+}

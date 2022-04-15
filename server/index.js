@@ -21,9 +21,12 @@ mongoose.connection.on('error',(err)=>{
 })
 
 require('./models/User');
+require('./models/Group');
+require('./models/groupChild');
 
 app.use(express.json())
 app.use(require('./routes/auth'))
+app.use(require('./routes/group'))
 
 app.listen(3001,()=>{
     console.log('Port is running on 3001');

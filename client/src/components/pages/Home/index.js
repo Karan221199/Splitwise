@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import './Home.css';
 import plane from '../../assets/images/plane.svg';
 import smallPlane from '../../assets/images/smallPlane.svg';
@@ -12,8 +12,18 @@ import asset2 from '../../assets/images/asset2.png';
 import asset3 from '../../assets/images/asset3.png';
 import asset4 from '../../assets/images/asset4.png';
 import asset5 from '../../assets/images/asset5.png';
+import {useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
 
 const Home = () => {
+    const navigate = useNavigate();
+    const {user} = useSelector(state=>state.user || {});
+    useEffect(()=>{
+        if(user != undefined)
+        {
+            navigate('/dashboard');
+        }
+    })
     return (
         <section>
         <div className='homeBg'>
@@ -52,7 +62,7 @@ const Home = () => {
                             </div>
                         </div>
                         <div className='row'>
-                            <div className='col-6 offset-3 col-md-4' style={{textAlign: "center"}}>
+                            <div className='col-6 offset-3 offset-md-0 col-md-4' style={{textAlign: "center"}}>
                                 <a className={"nav-link activeText"} href="/signup" style={{padding: "17px"}}>Sign up</a>
                             </div>
                         </div>
