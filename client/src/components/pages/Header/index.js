@@ -23,21 +23,25 @@ const Header = () =>{
             {
                 user==null 
                 ?
-                <span>
-                    <button id='HeaderCollpase' className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button id='HeaderCollpase' className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
-                    </button>
-                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul className="navbar-nav">
-                            <li className={"nav-item "+((window.location.pathname === '/login') ? 'active' : '')}>
-                                <a className={"nav-link " + ((window.location.pathname === '/login')? 'activeText' : 'Text')} href="/login">Log in</a>
-                            </li>
-                            <li className={"nav-item "+((window.location.pathname === '/signup') ? 'active' : '')}>
-                                <a className={"nav-link "+ ((window.location.pathname === '/signup')? 'activeText' : 'Text')} href="/signup">Sign up</a>
-                            </li>
-                        </ul>
-                    </div>
-                </span>
+                </button>
+                :
+                ''
+            }
+            {
+                user==null 
+                ?
+                <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul className="navbar-nav">
+                        <li className={"nav-item "+((window.location.pathname === '/login') ? 'active' : '')}>
+                            <a className={"nav-link " + ((window.location.pathname === '/login')? 'activeText' : 'Text')} href="/login">Log in</a>
+                        </li>
+                        <li className={"nav-item "+((window.location.pathname === '/signup') ? 'active' : '')}>
+                            <a className={"nav-link "+ ((window.location.pathname === '/signup')? 'activeText' : 'Text')} href="/signup">Sign up</a>
+                        </li>
+                    </ul>
+                </div>
                 :
                 ''
             }
@@ -50,27 +54,11 @@ const Header = () =>{
                 :
                 ''
             }
+            
             {
                 user!=null 
                 ?
-                <div className="form-group has-search smallScreen">
-                    <span className="fa fa-search form-control-feedback"></span>
-                    <input type="text" className="form-control" placeholder="Search" />
-                </div>
-                :
-                ''
-            }
-            {
-                user!=null 
-                ?
-                <button type='button' className='btn ml-auto smallScreen' style={{width:"10%"}}>+ Add Expense</button>
-                :
-                ''
-            }
-            {
-                user!=null 
-                ?
-                <ul className="navbar-nav smallScreen" style={{margin:"0px 30px"}}>
+                <ul className="navbar-nav smallScreen ml-auto" style={{margin:"0px 30px"}}>
                     <li className={"nav-item dropdown"} style={{display:"flex"}}>
                         <img src={userImage} alt='user' style={{width:"40px"}}/>
                         <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -78,7 +66,7 @@ const Header = () =>{
                         </a>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a className="dropdown-item" href="#">Your account</a>
-                            <a className="dropdown-item" href="#">Create a group</a>
+                            <a className="dropdown-item" href="#" data-toggle="modal" data-target="#addGroupModal">Create a group</a>
                             <a className="dropdown-item" href="javascript:void(0)"
                             onClick={()=>{
                                 localStorage.clear()

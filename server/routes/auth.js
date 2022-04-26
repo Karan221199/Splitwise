@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model("User");
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = require('../keys');
+const requireLogin = require('../middleware/requireLogin')
 
 router.post('/signup',(req,res)=>{
     const {name,email,password} = req.body;
@@ -64,6 +65,16 @@ router.post('/login',(req,res)=>{
         .catch(err=>{
             console.log(err);
         })
+    })
+})
+
+
+router.get('/allUsers',requireLogin,(req,res)=>{
+    User.find().then(users => {
+        res.json({users})
+    })
+    .catch(err=>{
+        console.log(err)
     })
 })
 

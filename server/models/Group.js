@@ -14,6 +14,7 @@ const groupSchema = new mongoose.Schema({
         type:Boolean,
         default:false
     },
+    users:[{type:ObjectId,ref:"User"}],
     createdBy:{
         type:ObjectId,
         ref:"User"

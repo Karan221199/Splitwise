@@ -22,7 +22,6 @@ mongoose.connection.on('error',(err)=>{
 
 require('./models/User');
 require('./models/Group');
-require('./models/groupChild');
 
 app.use(express.json())
 app.use(require('./routes/auth'))

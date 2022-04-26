@@ -1,9 +1,11 @@
 import {combineReducers,createStore} from 'redux';
 
 import {userReducer} from '../reducers/user';
+import {groupReducer} from '../reducers/group';
 
 const reducer = combineReducers({
-    user: userReducer
+    user: userReducer,
+    group: groupReducer
 });
 
 const initialState = {};
