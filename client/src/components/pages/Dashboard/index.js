@@ -8,7 +8,7 @@ import Settings from './components/settings';
 import Groups from './components/groups';
 import Friends from './components/friends';
 import $ from 'jquery';
-import {setGroup} from '../../redux/actions/action'
+import {setGroup,setExpense} from '../../redux/actions/action'
 import {useDispatch} from 'react-redux'
 
 const Dashboard = () => {
@@ -45,6 +45,18 @@ const Dashboard = () => {
         .then(data=>{
             setallUsers(data.users);
         });
+
+        fetch('http://localhost:3001/getExpenses',{
+            headers:{
+                'Content-Type':'application/json',
+                'Authorization':'Bearer '+localStorage.getItem('jwt')
+            }
+        })
+        .then(res=>res.json())
+        .then(result=>{
+            console.log(result.expenses)
+            dispatch(setExpense(result.expenses))
+        })
     },[])
 
     const [gName,setgName] = useState('');

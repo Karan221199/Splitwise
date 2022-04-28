@@ -1,4 +1,4 @@
-import { USER } from "../action-types/type";
+import { EXPENSE, USER } from "../action-types/type";
 import { CLEAR } from "../action-types/type";
 import { GROUP } from "../action-types/type";
 
@@ -24,3 +24,10 @@ export const setGroup = (data) => {
         data,
     };
 };
+
+export const setExpense = (data) => {
+    return {
+        type: EXPENSE,
+        data,
+    }
+}
