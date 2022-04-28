@@ -26,6 +26,7 @@ const Schema = mongoose.Schema({
         type: ObjectId,
         ref:"User"
     },
+    shared_by:[{type:ObjectId,ref:"User"}],
     createdBy:{
         type:ObjectId,
         ref:"User"

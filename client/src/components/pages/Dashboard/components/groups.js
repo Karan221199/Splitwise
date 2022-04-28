@@ -6,6 +6,7 @@ import {useSelector} from 'react-redux'
 import $ from 'jquery'
 
 const Groups = () => {
+    
     const groupID = window.location.pathname.split('/')[2];
     const {group} = useSelector(state => state.group || {})
     const {expense} = useSelector(state => state.expense || {});
@@ -13,8 +14,9 @@ const Groups = () => {
     const [desc,setDesc] = useState('');
     const [currency,setCurrency] = useState('INR');
     const [amount,setAmount] = useState(0);
+    
 
-    const saveExpenseHandler = () => {
+    const saveExpenseHandler = (e) => {
         var selectedGroup = $("#selectGroup").val();
         
         var paidBy = $("#selectUser").val();
@@ -54,6 +56,12 @@ const Groups = () => {
 
         let count = usersArr.length;
         let myShare = amount / count;
+        myShare = myShare.toFixed(2);
+
+        let shared_by = [];
+        usersArr.map(item=>{
+            shared_by.push(item._id)
+        })
 
         fetch('http://localhost:3001/saveExpense',{
             method:"post",
@@ -67,7 +75,8 @@ const Groups = () => {
                 expense:amount,
                 selectedGroup,
                 paidBy,
-                myShare
+                myShare,
+                shared_by
             })
         })
         .then(res=>res.json())
@@ -107,6 +116,7 @@ const Groups = () => {
     var currentdate = new Date();
 
     var datetime = monthNames[currentdate.getMonth()] + " " + currentdate.getFullYear();
+    let currentMonth = monthNames[currentdate.getMonth()];
     const getMonth = (val) =>{
         var date = new Date(val);
        return monthNames[date.getMonth()];
@@ -114,6 +124,31 @@ const Groups = () => {
     const getDate = (val) =>{
         var date = new Date(val);
        return date.getDate();
+    }
+
+    const deleteExpense = (expenseID,e) => {
+        fetch('http://localhost:3001/deleteExpense',{
+            method:"delete",
+            headers:{
+                'Content-Type':'application/json',
+                'Authorization':'Bearer '+localStorage.getItem('jwt')
+            },
+            body:JSON.stringify({
+                ID:expenseID
+            })
+        })
+        .then(res=>res.json())
+        .then(response=>{
+            console.log(response);
+            if(response.error)
+            {
+                alert(response.error);
+            }
+            else{
+                alert("Deleted Successfully");
+            }
+        })
+        
     }
     return(
         <section>
@@ -146,7 +181,8 @@ const Groups = () => {
                         </div>
                         {
                             expense.map(item=>{
-                                if(item.group_id === groupID)
+                                
+                                if(item.group_id === groupID && currentMonth === getMonth(item.createdOn))
                                 {
                                     return (
                                         <div className='expense'>
@@ -186,11 +222,15 @@ const Groups = () => {
                                                         </div>
                                                         :
                                                         <div className="you ">
-                                                            Smriti lent you
+                                                            {item.paid_by.name} lent you
                                                             <br/>
-                                                            <span className="negative">INR25.00</span>
+                                                            <span className="negative">{item.myShare}</span>
                                                         </div>
                                                     }
+                                                    <div className="actions" >
+                                                        <a href="#" className="delete" onClick={(e)=>deleteExpense(item._id,e)}>×</a>
+                                                    </div>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -198,37 +238,7 @@ const Groups = () => {
                                 }
                             })
                         }
-                        <div className="expense">
-                            <div className="summary">
-                                <div className="expense summary involved">
-                                    <div className="main-block">
-                                        <div className="date" title="2022-04-15T16:50:26Z">Apr <div className="number">15</div></div>
-                                        <img src="https://s3.amazonaws.com/splitwise/uploads/category/icon/square_v2/food-and-drink/groceries@2x.png" className="receipt" />
-                                        <div className="header">
-                                            <span className="description ">
-                                            <a href="#" >
-                                                Juice spring roll
-                                            </a>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div className="cost">
-                                        Smriti paid<br/>
-                                        <span className="number">INR50.00</span>
-                                    </div>
-                                    <div className="you ">
-                                        Smriti lent you
-                                        <br/>
-                                        <span className="negative">INR25.00</span>
-                                    </div>
-                                    <div className="actions">
-                                        <a href="/expenses/1654928118" className="delete">×</a>
-                                    </div>
-                                    <div className="category_picker"></div>
-                                </div>
-                            </div>
-                            <div className="users"></div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -292,7 +302,7 @@ const Groups = () => {
                                            </div>
                                        </div>
                                         <div className='col-12 mt-3' style={{textAlign:"right"}}>
-                                            <button type="button" onClick={saveExpenseHandler} className="btn" style={{width:"120px"}} >Save</button>
+                                            <button type="button" onClick={(e)=>saveExpenseHandler(e)} className="btn" style={{width:"120px"}} >Save</button>
                                         </div>
                                     </div>
                                 </div>
