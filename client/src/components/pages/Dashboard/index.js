@@ -8,7 +8,7 @@ import Settings from './components/settings';
 import Groups from './components/groups';
 import Friends from './components/friends';
 import $ from 'jquery';
-import {setGroup,setExpense} from '../../redux/actions/action'
+import {setGroup,setExpense, addGroup} from '../../redux/actions/action'
 import {useDispatch} from 'react-redux'
 
 const Dashboard = () => {
@@ -54,7 +54,6 @@ const Dashboard = () => {
         })
         .then(res=>res.json())
         .then(result=>{
-            console.log(result.expenses)
             dispatch(setExpense(result.expenses))
         })
     },[])
@@ -96,7 +95,9 @@ const Dashboard = () => {
             }
             else{
                 alert('success');
-                console.log(data);
+                // dispatch({type:"ADD_GROUP",payload:data.result})
+                dispatch(addGroup(data.groups))
+                setGroups(oldArray => [...oldArray,data.groups] );
             }
         })
     }
@@ -204,6 +205,7 @@ const Dashboard = () => {
                                     </div>
                                     <div className='col-12'>
                                         <select className='form-control' id='groupType' onChange={(e)=>setgType(e.target.value)}>
+                                            <option value="">Select</option>
                                             <option value="Home">Home</option>
                                             <option value="Trip">Trip</option>
                                             <option value="Couple">Couple</option>

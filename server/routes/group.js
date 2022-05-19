@@ -20,8 +20,15 @@ router.post('/addGroup',requireLogin,(req,res)=>{
     })
 
     group.save().then(result=>{
-        res.json({result})
-        
+
+        Group.findById(result._id).populate("createdBy","_id name email")
+        .populate("users","_id name email")
+        .then(groups => {
+            res.json({groups})
+        })
+        .catch(err=>{
+            console.log(err)
+        })
     })
     .catch(err=>{
         console.log(err)

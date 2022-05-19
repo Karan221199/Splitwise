@@ -1,4 +1,4 @@
-import {GROUP} from "../action-types/type";
+import {GROUP,ADD_GROUP} from "../action-types/type";
 
 const initialGroup = () => {
     const groups = [];
@@ -14,6 +14,12 @@ export const groupReducer = (state = initialState, action) => {
         case GROUP: {
             return {
                 group:action.data
+            };
+        }
+        case ADD_GROUP: {
+            return {
+                ...state,
+                group: [...state.group,  action.data]
             };
         }
         default:
